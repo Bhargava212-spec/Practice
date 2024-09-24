@@ -15,7 +15,7 @@ public class AbstractDemoImpl extends AbstractDemo {
         return 0;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)  {
         AbstractDemo abstractDemo = new AbstractDemoImpl(10, "Test", "city");
         var res = abstractDemo.demo1();
     }

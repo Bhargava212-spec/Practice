@@ -1,15 +1,27 @@
 package com.test;
 
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Solution {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+//        int[] a = {1, 4, 5, 2, 12, 34, 2, 3, 11, 34, 40};
+//        int[] intArray = {1, 4, 5, 2, 12, 34, 2, 2, 3, 11, 34, 40};
+//        var set = new HashSet<Integer>();
+//        Arrays.stream(a).boxed().filter(var -> !set.add(var)).distinct().collect(Collectors.toList());
+//        Arrays.stream(a).boxed().sorted(Comparator.reverseOrder()).limit(2).skip(1).findFirst().orElse(-1);
+//        var list = Arrays.stream(a).boxed().collect(Collectors.toList());
+//        System.out.println(list);
+//        list.stream().mapToInt(Integer::intValue).toArray();
+
+
 //        Integer a1 = 100;
 //        Integer a2 = 100;
 //        Integer a3 = 500;
@@ -26,6 +38,7 @@ public class Solution {
 //        } else {
 //            System.out.println("false");
 //        }
+        findSubstring("barfoofoobarthefoobarman", new String[]{"bar", "foo", "the"});
     }
 
 
@@ -80,21 +93,6 @@ public class Solution {
         return stack.isEmpty();
     }
 
-
-    public  boolean isArraySpecial(int[] nums) {
-        if (nums.length < 2) {
-            return true;
-        }
-
-        for (var i = 1; i < nums.length; i++) {
-            if ((nums[i] % 2 == 0 && nums[i - 1] % 2 == 0) || (nums[i] % 2 != 0 && nums[i - 1] % 2 != 0)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-
     public static boolean[] isArraySpecial(int[] nums, int[][] queries) {
         var res = new boolean[queries.length];
         var map = new HashMap<int[], Boolean>();
@@ -142,139 +140,6 @@ public class Solution {
         return res;
     }
 
-    public int duplicateNumbersXOR(int[] nums) {
-        var map = new HashMap<Integer, Integer>();
-        for (var num : nums) {
-            map.put(num, map.getOrDefault(num, 0) + 1);
-        }
-        var res = 0;
-        for (var entry : map.entrySet()) {
-            if (entry.getValue() == 2) {
-                res = res ^ entry.getKey();
-            }
-        }
-        return res;
-    }
-
-    public String findLatestTime(String s) {
-        var arr = s.split(":");
-        if (arr[0].equals("??") && arr[1].equals("??")) {
-            return "11:59";
-        }
-        var str1 = arr[0];
-        var res = new StringBuilder();
-        if (str1.equals("??")) {
-            res.append("11");
-        } else {
-            if (Character.isDigit(str1.charAt(0))) {
-                res.append(str1.charAt(0));
-                if (Character.isDigit(str1.charAt(1))) {
-                    res.append(str1.charAt(1));
-                } else {
-                    if (Character.getNumericValue(str1.charAt(0)) == 1) {
-                        res.append(1);
-                    } else {
-                        res.append(9);
-                    }
-                }
-            } else {
-                if (Character.isDigit(str1.charAt(1))) {
-                    if (Character.getNumericValue(str1.charAt(1)) == 1 || Character.getNumericValue(str1.charAt(1)) == 0) {
-                        res.append(1).append(str1.charAt(1));
-                    } else {
-                        res.append(0).append(str1.charAt(1));
-                    }
-                } else {
-                    res.append("11");
-                }
-            }
-        }
-
-        res.append(":");
-        var str2 = arr[1];
-
-        if (str2.equals("??")) {
-            res.append("59");
-        } else {
-            if (Character.isDigit(str2.charAt(0))) {
-                res.append(str2.charAt(0));
-                if (Character.isDigit(str2.charAt(1))) {
-                    res.append(str2.charAt(1));
-                } else {
-                    res.append(9);
-                }
-            } else {
-                if (Character.isDigit(str2.charAt(1))) {
-                    res.append(5).append(str2.charAt(1));
-                } else {
-                    res.append(59);
-                }
-            }
-        }
-        return res.toString();
-    }
-
-
-    public String maximumTime(String time) {
-        var arr = time.split(":");
-        if (arr[0].equals("??") && arr[1].equals("??")) {
-            return "23:59";
-        }
-        var str1 = arr[0];
-        var res = new StringBuilder();
-        if (str1.equals("??")) {
-            res.append("23");
-        } else {
-            if (Character.isDigit(str1.charAt(0))) {
-                res.append(str1.charAt(0));
-                if (Character.isDigit(str1.charAt(1))) {
-                    res.append(str1.charAt(1));
-                } else {
-                    if (Character.getNumericValue(str1.charAt(0)) == 2) {
-                        res.append(3);
-                    } else {
-                        res.append(9);
-                    }
-                }
-            } else {
-                if (Character.isDigit(str1.charAt(1))) {
-                    if (Character.getNumericValue(str1.charAt(1)) > 3) {
-                        res.append(1).append(str1.charAt(1));
-                    } else {
-                        res.append(2).append(str1.charAt(1));
-                    }
-                } else {
-                    res.append(23);
-                }
-            }
-        }
-        res.append(":");
-        var str2 = arr[1];
-        if (str2.equals("??")) {
-            res.append("59");
-        } else {
-            if (Character.isDigit(str2.charAt(0))) {
-                res.append(str2.charAt(0));
-                if (Character.isDigit(str2.charAt(1))) {
-                    res.append(str2.charAt(1));
-                } else {
-                    res.append(9);
-                }
-            } else {
-                if (Character.isDigit(str2.charAt(1))) {
-                    res.append(5).append(str2.charAt(1));
-                } else {
-                    res.append(59);
-                }
-            }
-        }
-        return res.toString();
-    }
-
-//    public int countTime(String time) {
-//
-//    }
-
     public static boolean canJump(int[] nums) {
         var len = nums.length;
         var max = 0;
@@ -316,23 +181,6 @@ public class Solution {
         return days;
     }
 
-
-    public int longestValidParentheses(String s) {
-        var stack = new Stack<Character>();
-        var arr = s.toCharArray();
-        var res = 0;
-        for (var ch : arr) {
-            if (ch == '(') {
-                stack.push(ch);
-            } else if (!stack.isEmpty() && ch == ')' && stack.peek() == '(') {
-                stack.pop();
-                res = res + 2;
-            }
-        }
-        return res;
-    }
-
-
     public static long maximumSubarraySum(int[] arr, int k) {
         long res = 0;
         var len = arr.length;
@@ -346,7 +194,6 @@ public class Solution {
         }
         return res;
     }
-
 
     public static List<Integer> lastVisitedIntegers(int[] nums) {
 
@@ -382,71 +229,9 @@ public class Solution {
 
     }
 
-    public String largestNumber(int[] nums) {
-        var str = Arrays.stream(nums).boxed().map(String::valueOf).sorted((var1, var2) -> (var2 + var1).compareTo(var1 + var2)).collect(Collectors.joining());
-
-        if (new BigInteger(str).equals(BigInteger.ZERO)) {
-            return "0";
-        }
-
-        return str;
-
-    }
-
-
-    public long smallestNumber(long num) {
-        if (num == 0) {
-            return 0;
-        }
-
-        Comparator<String> comparator = (str1, str2) -> {
-            if (num < 0) {
-                return (str2 + str1).compareTo(str1 + str2);
-            }
-            return (str1 + str2).compareTo(str2 + str1);
-        };
-        if (num < 0) {
-            return -smallestNumber(Math.abs(num), Solution::compare1, true);
-        }
-        return smallestNumber(num, Solution::compare, false);
-    }
-
-    public long smallestNumber(long num, Comparator<String> cmp, boolean isNegative) {
-
-
-        var str = String.valueOf(num).chars().mapToObj(var -> (char) var).map(String::valueOf).sorted(cmp).collect(Collectors.joining());
-
-        if (str.charAt(0) == '0') {
-            var arr = str.toCharArray();
-            var index = 0;
-            if (isNegative) {
-                index = getMax(arr);
-            } else {
-                index = getMin(str);
-            }
-            arr[0] = arr[index];
-            arr[index] = '0';
-            str = new String(arr);
-        }
-        return Long.parseLong(str);
-    }
-
-    private int getMin(String arr) {
-        var val = arr.chars().mapToObj(var -> (char) var).map(Character::getNumericValue).filter(var -> var > 0).min(Comparator.comparingInt(Integer::intValue)).get();
-        return arr.indexOf(Integer.toString(val));
-    }
-
-    private int getMax(char[] arr) {
-        var index = 0;
-        var max = Character.getNumericValue(arr[0]);
-        for (var i = 1; i < arr.length; i++) {
-            if (Character.getNumericValue(arr[i]) > max) {
-                index = i;
-                max = Character.getNumericValue(arr[i]);
-            }
-        }
-        return index;
-    }
+//    public int countTime(String time) {
+//
+//    }
 
     public static int compare(String s1, String s2) {
         return (s1 + s2).compareTo(s2 + s1);
@@ -460,19 +245,6 @@ public class Solution {
         var ch = s.chars().mapToObj(c -> (char) c).filter(var -> (s.indexOf(Character.toString(var)) != s.lastIndexOf(Character.toString(var)))).limit(1).findFirst().orElse(null);
 
         return ch;
-    }
-
-    public String clearDigits(String s) {
-        var stack = new Stack<Character>();
-        var arr = s.toCharArray();
-        for (var ch : arr) {
-            if (Character.isDigit(ch)) {
-                stack.pop();
-            } else {
-                stack.push(ch);
-            }
-        }
-        return stack.isEmpty() ? "" : stack.stream().map(String::valueOf).collect(Collectors.joining());
     }
 
     public static int findWinningPlayer(int[] skills, int k) {
@@ -514,7 +286,6 @@ public class Solution {
         return list.indexOf(fn);
     }
 
-
     public static String maximumNumber(String num, int[] change) {//262/279
         var sb = new StringBuilder();
         for (var i = 0; i < num.length(); i++) {
@@ -526,19 +297,6 @@ public class Solution {
             }
         }
         return sb.toString();
-    }
-
-    public int countCompleteDayPairs(int[] hours) {
-        var result = 0;
-        for (var i = 0; i < hours.length; i++) {
-            for (var j = i + 1; j < hours.length; j++) {
-                if ((hours[i] + hours[j]) % 24 == 0) {
-                    result++;
-                    break;
-                }
-            }
-        }
-        return result;
     }
 
     public static long countCompleteDayPairs1(int[] hours) {
@@ -557,21 +315,6 @@ public class Solution {
 
 
         return cnt;
-    }
-
-    public double minimumAverage(int[] nums) {
-        Arrays.sort(nums);
-        Deque<Integer> que = new LinkedList<>();
-
-        for (var num : nums) {
-            que.addLast(num);
-        }
-        var len = nums.length / 2;
-        var avg = Double.MAX_VALUE;
-        while (len-- > 0) {
-            avg = Math.min(avg, ((double) que.pollFirst() + (double) que.pollLast()) / 2.0);
-        }
-        return avg;
     }
 
     public static int minTimeToType(String word) {
@@ -600,33 +343,6 @@ public class Solution {
             currIndex = index;
         }
         return minTime;
-    }
-
-    public String countAndSay(int n) {
-        var str = "1";
-        if (n == 1) {
-            return str;
-        }
-        var temp = 2;
-        while (temp <= n) {
-            var len = str.length();
-            var prev = str.charAt(0);
-            var sb = new StringBuilder();
-            var count = 1;
-            for (var i = 1; i < len; i++) {
-                var curr = str.charAt(i);
-                if (prev == curr) {
-                    count++;
-                } else {
-                    sb.append(count).append(prev);
-                    count = 1;
-                    prev = curr;
-                }
-            }
-            str = sb.append(count).append(prev).toString();
-            temp++;
-        }
-        return str;
     }
 
     public static int calculate(String s) {
@@ -830,7 +546,7 @@ public class Solution {
 
         while (index != -1) {
             var to = endList.get(index);
-            System.out.print(STR."\{start} -> \{to} ,");
+            System.out.print("start -> to ,");
             start = to;
             index = startList.indexOf(start);
         }
@@ -866,25 +582,6 @@ public class Solution {
             num--;
         }
         return count;
-    }
-
-    public int[][] modifiedMatrix(int[][] matrix) {
-        var len = matrix.length;
-        for (var i = 0; i < len; i++) {
-            var temp = matrix[i];
-            for (var j = 0; j < temp.length; j++) {
-                if (temp[j] == -1) {
-                    var curr = 0;
-                    var max = Integer.MIN_VALUE;
-                    while (curr < len) {
-                        max = Math.max(max, matrix[curr][j]);
-                        curr++;
-                    }
-                    matrix[i][j] = max;
-                }
-            }
-        }
-        return matrix;
     }
 
     public static String lastNonEmptyString(String s) {
@@ -969,26 +666,6 @@ public class Solution {
             num = num % (temp * 1000);
             getRoman(num, map, sb);
         }
-    }
-
-
-    public String clearStars(String s) {
-        var cnt = s.chars().mapToObj(c -> (char) c).filter(var -> var == '*').count();
-        if (cnt >= s.length() - cnt) {
-            return "";
-        }
-        var arr = s.toCharArray();
-        List<String> list = new ArrayList<>();
-        for (var ch : arr) {
-            if (ch == '*') {
-                var min = Collections.min(list);
-                var index = list.lastIndexOf(min);
-                list.remove(index);
-            } else {
-                list.add(Character.toString(ch));
-            }
-        }
-        return String.join("", list);
     }
 
     public static int[] queryResults(int limit, int[][] queries) {
@@ -1096,34 +773,6 @@ public class Solution {
         return res;
     }
 
-    public int numberOfAlternatingGroups(int[] colors) {
-        var len = colors.length;
-        var res = 0;
-        if (len < 3) {
-            return res;
-        }
-        var temp1 = colors[len - 2];
-        var temp2 = colors[len - 1];
-        if (temp1 != temp2 && temp2 != colors[0]) {
-            res++;
-        }
-        if (temp2 != colors[0] && colors[0] != colors[1]) {
-            res++;
-        }
-        var start = 0;
-        var mid = 1;
-        var end = 2;
-        while (end < len) {
-            if (colors[start] != colors[mid] && colors[mid] != colors[end]) {
-                res++;
-            }
-            start++;
-            mid++;
-            end++;
-        }
-        return res;
-    }
-
     public static int numberOfAlternatingGroups(int[] colors, int k) {
         var res = 0;
         var len = colors.length;
@@ -1176,31 +825,6 @@ public class Solution {
                 res++;
             }
             start++;
-        }
-        return res;
-    }
-
-    public int equalPairs(int[][] grid) {
-        var len = grid.length;
-        var rowMap = new HashMap<Integer, int[]>();
-        var columnMap = new HashMap<Integer, int[]>();
-        for (var i = 0; i < len; i++) {
-            rowMap.put(i, grid[i]);
-        }
-        for (var i = 0; i < len; i++) {
-            var col = new int[len];
-            for (var j = 0; j < len; j++) {
-                col[j] = grid[j][i];
-            }
-            columnMap.put(i, col);
-        }
-        var res = 0;
-        for (var i = 0; i < len; i++) {
-            for (var j = 0; j < len; j++) {
-                if (Arrays.equals(rowMap.get(i), columnMap.get(j))) {
-                    res++;
-                }
-            }
         }
         return res;
     }
@@ -1261,43 +885,6 @@ public class Solution {
             var rem = (maxWidth - count) - temp;
             var str = String.join(" ".repeat(rem / count), tempList);
             res.add(str);
-        }
-        return res;
-    }
-
-    public boolean satisfiesConditions(int[][] grid) {
-        var len = grid.length;
-        var col = grid[0].length;
-        if (col == 1 && len == 1) {
-            return true;
-        }
-        if (col == 1) {
-            for (int i = 1; i < len; i++) {
-                if (grid[i][0] != grid[i - 1][0]) {
-                    return false;
-                }
-            }
-            return true;
-        }
-        for (var i = 0; i < len; i++) {
-            for (var j = 0; j < col; j++) {
-                if (j + 1 < col && grid[i][j] != grid[i][j + 1]) {
-                    return false;
-                }
-                if (i + 1 < len && grid[i][j] == grid[i + 1][j]) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    public int findPermutationDifference(String s, String t) {
-        var res = 0;
-        for (var i = 0; i < s.length(); i++) {
-            var ch = s.charAt(i);
-            var index = t.indexOf(ch);
-            res = res + Math.abs(i - index);
         }
         return res;
     }
@@ -1381,113 +968,6 @@ public class Solution {
         return false;
     }
 
-    public List<List<Integer>> shiftGrid(int[][] grid, int k) {
-        var list = new ArrayList<>(Arrays.stream(grid).flatMapToInt(Arrays::stream).boxed().toList());
-        Collections.rotate(list, k);
-        List<List<Integer>> res = new ArrayList<>();
-        var len = grid.length;
-        var start = 0;
-        var len1 = grid[0].length;
-        var index = 0;
-        while (start < len) {
-            var temp = index + len1;
-            res.add(list.subList(index, temp));
-            index = temp;
-            start++;
-        }
-        return res;
-    }
-
-    public long[] unmarkedSumArray(int[] nums, int[][] queries) {
-        var len = queries.length;
-        var res = new long[len];
-        var list = new ArrayList<Integer>();
-        for (var num : nums) {
-            list.add(num);
-        }
-        for (var i = 0; i < len; i++) {
-            var temp = queries[i];
-            list.set(temp[0], null);
-            var tempList = list.stream().filter(Objects::nonNull).sorted(Comparator.naturalOrder()).limit(temp[1]).toList();
-            if (tempList.size() < temp[1]) {
-                res[i] = 0;
-                break;
-            } else {
-                var prev = 0;
-                for (var num : tempList) {
-                    var index = list.subList(prev, list.size()).indexOf(num);
-                    list.set(prev + index, null);
-                }
-            }
-            res[i] = list.parallelStream().filter(Objects::nonNull).mapToInt(Integer::intValue).sum();
-        }
-        return res;
-    }
-
-    public int returnToBoundaryCount(int[] nums) {
-        var res = 0;
-        var temp = 0;
-        for (var num : nums) {
-            temp = temp + num;
-            if (temp == 0) {
-                res++;
-            }
-        }
-        return res;
-    }
-
-    public int minimumRightShifts(List<Integer> nums) {
-        var list = new ArrayList<>(nums);
-        Collections.sort(list);
-        var len = list.size();
-
-        if (list.equals(nums)) {
-            return 0;
-        }
-
-        while (len > 0) {
-            Collections.rotate(nums, -1);
-            if (list.equals(nums)) {
-                return list.size() - len;
-            }
-            len--;
-        }
-        return -1;
-    }
-
-    public int minLength(String s) {
-        var sb = new StringBuilder(s);
-        while (s.contains("AB") || s.contains("CD")) {
-            var index = s.indexOf("AB");
-            if (index != -1) {
-                sb.replace(index, index + 2, "");
-            } else {
-                index = s.indexOf("CD");
-                sb.replace(index, index + 2, "");
-            }
-            s = sb.toString();
-        }
-        return s.length();
-    }
-
-    public String makeSmallestPalindrome(String s) {
-        var arr = s.toCharArray();
-        var start = 0;
-        var end = arr.length - 1;
-        while (start < end) {
-            if (arr[start] != arr[end]) {
-                if (arr[start] > arr[end]) {
-                    arr[start] = arr[end];
-                } else {
-                    arr[end] = arr[start];
-                }
-            }
-            start++;
-            end--;
-        }
-        return new String(arr);
-    }
-
     public static String reverseParentheses(String s) {
         var sb = new StringBuilder(s);
         while (s.contains(")")) {
@@ -1500,23 +980,6 @@ public class Solution {
             s = sb.toString();
         }
         return s;
-    }
-
-    public void wiggleSort(int[] nums) {
-        var list = new ArrayList<Integer>();
-        for (var num : nums) {
-            list.add(num);
-        }
-        Collections.sort(list);
-        var start = 0;
-        while (!list.isEmpty()) {
-            nums[start] = list.removeFirst();
-            if (!list.isEmpty()) {
-                start = start + 1;
-                nums[start] = list.removeLast();
-            }
-            start++;
-        }
     }
 
     public static int maximumGain(String s, int x, int y) {
@@ -1656,68 +1119,6 @@ public class Solution {
         return matrix;
     }
 
-    public int[][] spiralMatrix(int m, int n, ListNode head) {
-        var matrix = new int[m][n];
-        var rightIndex = n;
-        var rightStart = 0;
-        var downStart = 1;
-        var initial = 0;
-        var last = m - 1;
-        while (initial <= last) {
-            var temp = rightStart;
-            while (temp < rightIndex) {
-                matrix[initial][temp] = Objects.nonNull(head) ? head.val : -1;
-                if (Objects.nonNull(head)) {
-                    head = head.next;
-                }
-                temp++;
-            }
-            rightStart++;
-            rightIndex--;
-            if (downStart > last) {
-                break;
-            }
-            var stat = temp - 1;
-            temp = downStart;
-            while (temp <= last) {
-                matrix[temp][stat] = Objects.nonNull(head) ? head.val : -1;
-                if (Objects.nonNull(head)) {
-                    head = head.next;
-                }
-                temp++;
-            }
-            var leftStart = rightIndex - 1;
-            if (leftStart < rightStart - 1) {
-                break;
-            }
-            while (leftStart >= rightStart - 1) {
-                matrix[last][leftStart] = Objects.nonNull(head) ? head.val : -1;
-                if (Objects.nonNull(head)) {
-                    head = head.next;
-                }
-                leftStart--;
-            }
-            var upStart = last - 1;
-            if (upStart < initial) {
-                break;
-            }
-            while (upStart > initial) {
-                matrix[upStart][rightStart - 1] = Objects.nonNull(head) ? head.val : -1;
-                if (Objects.nonNull(head)) {
-                    head = head.next;
-                }
-                upStart--;
-            }
-            if (rightStart == rightIndex) {
-                break;
-            }
-            initial++;
-            downStart++;
-            last--;
-        }
-        return matrix;
-    }
-
     public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         var sb1 = new StringBuilder();
         var sb2 = new StringBuilder();
@@ -1829,49 +1230,6 @@ public class Solution {
         System.out.println(new String(arr));
     }
 
-    public int hammingDistance(int x, int y) {
-        var first = x;
-        var second = y;
-        if (x < y) {
-            first = y;
-            second = x;
-        }
-        var str1 = Integer.toBinaryString(first);
-        var str2 = Integer.toBinaryString(second);
-        var len = str1.length();
-        str2 = "0".repeat(len - str2.length()) + str2;
-        var res = 0;
-        for (var i = 0; i < len; i++) {
-            if (str1.charAt(i) != str2.charAt(i)) {
-                res++;
-            }
-        }
-        return res;
-    }
-
-    public int totalHammingDistance(int[] nums) {
-        var max = IntStream.of(nums).max().getAsInt();
-        var temp = Integer.toBinaryString(max);
-        var arr = new String[nums.length];
-        for (var i = 0; i < nums.length; i++) {
-            var st = Integer.toBinaryString(nums[i]);
-            arr[i] = "0".repeat(temp.length() - st.length()) + st;
-        }
-        var res = 0;
-        for (var i = 0; i < nums.length; i++) {
-            var str1 = arr[i];
-            for (var j = i + 1; j < nums.length; j++) {
-                var str2 = arr[j];
-                for (var k = 0; k < temp.length(); k++) {
-                    if (str1.charAt(k) != str2.charAt(k)) {
-                        res++;
-                    }
-                }
-            }
-        }
-        return res;
-    }
-
     public static int[] findDiagonalOrder(int[][] mat) {
         //1  2  3  4
         //5  6  7  8
@@ -1930,74 +1288,6 @@ public class Solution {
         return arr;
     }
 
-    public boolean isSubtree(TreeNode root, TreeNode subRoot) {
-        if (root == null && subRoot == null) {
-            return true;
-        }
-        if (root == null || subRoot == null) {
-            return false;
-        }
-        var rootVal = subRoot.val;
-        Queue<TreeNode> que = new LinkedList<>();
-        que.offer(root);
-        while (!que.isEmpty()) {
-            var size = que.size();
-            while (size > 0) {
-                var node = que.poll();
-                if (node.val == rootVal && areIdentical(node, subRoot)) {
-                    return true;
-                }
-                if (Objects.nonNull(node.right)) {
-                    que.offer(node.right);
-                }
-                if (Objects.nonNull(node.left)) {
-                    que.offer(node.left);
-                }
-                size--;
-            }
-        }
-        return false;
-    }
-
-    private boolean areIdentical(TreeNode node, TreeNode subRoot) {
-        if (node == null && subRoot == null) {
-            return true;
-        }
-        if (node == null || subRoot == null) {
-            return false;
-        }
-        return node.val == subRoot.val && areIdentical(node.left, subRoot.left) && areIdentical(node.right, subRoot.right);
-    }
-
-//    public static ListNode modifiedList(int[] nums, ListNode head) {
-//        Set<Integer> set = new HashSet<>();
-//        for(int num : nums){
-//            set.add(num);
-//        }
-//        while (head != null) {
-//            var num = head.val;
-//
-//            head = head.next;
-//        }
-//        return
-//    }
-
-    public String getSmallestString(String s) {
-        var arr = s.toCharArray();
-        var prev = Character.getNumericValue(arr[0]);
-        for (var i = 1; i < arr.length; i++) {
-            var curr = Character.getNumericValue(arr[i]);
-            if (prev % 2 == curr % 2 && prev > curr) {
-                var temp = arr[i];
-                arr[i] = arr[i - 1];
-                arr[i - 1] = temp;
-                break;
-            }
-            prev = curr;
-        }
-        return new String(arr);
-    }
-
     public static String licenseKeyFormatting(String s, int k) {
         var sb = new StringBuilder();
         for (var i = 0; i < s.length(); i++) {
@@ -2024,86 +1314,6 @@ public class Solution {
             rem = rem + k;
         }
         return res.substring(0, res.length() - 1);
-    }
-
-    public int getMinimumDifference(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
-        Queue<TreeNode> que = new LinkedList<>();
-        var set = new HashSet<Integer>();
-        que.offer(root);
-        var res = Integer.MAX_VALUE;
-        while (!que.isEmpty()) {
-            var size = que.size();
-            while (size > 0) {
-                var node = que.poll();
-                var val = node.val;
-                if (!set.isEmpty()) {
-                    if (!set.contains(val)) {
-                        res = getMin(set, val, res);
-                        set.add(val);
-                    }
-                } else {
-                    set.add(val);
-                }
-                if (node.left != null) {
-                    if (!set.contains(val)) {
-                        res = getMin(set, node.left.val, res);
-                        set.add(node.left.val);
-                    }
-                    que.offer(node.left);
-                }
-                if (node.right != null) {
-                    if (!set.contains(val)) {
-                        res = getMin(set, node.right.val, res);
-                        set.add(node.right.val);
-                    }
-                    que.offer(node.right);
-                }
-                size--;
-            }
-        }
-        return res;
-    }
-
-    public int getMin(Set<Integer> set, int val, int res) {
-        if (!set.contains(val)) {
-            res = Math.min(res, set.stream().map(var -> Math.abs(var - val)).min(Comparator.comparing(Integer::intValue)).get());
-            set.add(val);
-        }
-        return res;
-    }
-
-    public boolean findTarget(TreeNode root, int k) {
-        var set = new HashSet<Integer>();
-        if (root == null) {
-            return false;
-        }
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.add(root);
-        while (!queue.isEmpty()) {
-            TreeNode node = queue.poll();
-            if (set.contains(k - node.val)) {
-                return true;
-            }
-            set.add(node.val);
-            if (node.left != null) {
-                queue.add(node.left);
-            }
-            if (node.right != null) {
-                queue.add(node.right);
-            }
-        }
-        return false;
-    }
-
-    public int[][] sortTheStudents(int[][] score, int k) {
-        var map = new TreeMap<Integer, int[]>(Comparator.reverseOrder());
-        for (var arr : score) {
-            map.put(arr[k], arr);
-        }
-        return map.values().toArray(int[][]::new);
     }
 
     public static boolean isLongPressedName(String name, String typed) {
@@ -2192,41 +1402,6 @@ public class Solution {
         return true;
     }
 
-    public int countPoints(String rings) {
-        var map = new HashMap<Character, HashSet<Character>>();
-        for (var i = 1; i < rings.length(); i += 2) {
-            var ch = rings.charAt(i);
-            HashSet<Character> set;
-            if (map.containsKey(ch)) {
-                set = map.get(ch);
-            } else {
-                set = new HashSet<>();
-            }
-            set.add(rings.charAt(i - 1));
-            map.put(ch, set);
-        }
-        return (int) map.values().stream().filter(var -> var.size() == 3).count();
-    }
-
-    public int maxDepth(Node root) {
-        if (root == null) {
-            return 0;
-        }
-        var res = 0;
-        Queue<Node> que = new LinkedList<>(root.children);
-        res = res + 1;
-        while (!que.isEmpty()) {
-            var size = que.size();
-            while (size > 0) {
-                var node = que.poll();
-                que.addAll(node.children);
-                size--;
-            }
-            res++;
-        }
-        return res;
-    }
-
     public static boolean leafSimilar(TreeNode root1, TreeNode root2) {
         if (root1 == null && root2 == null) {
             return true;
@@ -2310,30 +1485,6 @@ public class Solution {
         return dummyHead.next;
     }
 
-    public boolean isToeplitzMatrix(int[][] matrix) {
-        var rows = matrix.length;
-        var col = matrix[0].length;
-        if (col == 1 || rows == 1) {
-            return true;
-        }
-        for (var i = 0; i < rows; i++) {
-            var arr = matrix[i];
-            for (var j = 0; j < col; j++) {
-                var num = arr[j];
-                var index = j + 1;
-                var start = i + 1;
-                while (index < col && start < rows) {
-                    if (matrix[start][index] != num) {
-                        return false;
-                    }
-                    index++;
-                    start++;
-                }
-            }
-        }
-        return true;
-    }
-
     public static String shiftingLetters(String s, int[] shifts) {
         var arr = s.toCharArray();
         var len = shifts.length;
@@ -2348,52 +1499,6 @@ public class Solution {
             prev = prev + shifts[i];
         }
         return new String(arr);
-    }
-
-    public int minDiffInBST(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
-        Queue<TreeNode> que = new LinkedList<>();
-        que.add(root);
-        var list = new ArrayList<Integer>();
-        while (!que.isEmpty()) {
-            var node = que.poll();
-            list.add(node.val);
-            if (node.left != null) {
-                que.add(node.left);
-            }
-            if (node.right != null) {
-                que.add(node.right);
-            }
-        }
-        if (list.size() < 2) {
-            return list.getFirst();
-        }
-        Collections.sort(list);
-        return Math.min(list.get(1) - list.getFirst(), list.getLast() - list.get(list.size() - 2));
-    }
-
-    public int minChanges(int n, int k) {
-        if (k > n) {
-            return -1;
-        }
-        var str1 = Integer.toBinaryString(n);
-        var str2 = Integer.toBinaryString(k);
-        var len = str1.length();
-        if (len > str2.length()) {
-            str2 = "0".repeat(len - str2.length()) + str2;
-        }
-        var res = 0;
-        for (var i = 0; i < len; i++) {
-            if (str1.charAt(i) == '1' && str2.charAt(i) == '0') {
-                res++;
-            } else if (str1.charAt(i) == '0' && str2.charAt(i) == '1') {
-                res = -1;
-                break;
-            }
-        }
-        return res;
     }
 
     public static boolean canAliceWin(int[] nums) {
@@ -2552,19 +1657,6 @@ public class Solution {
         }
     }
 
-    public List<String> findRepeatedDnaSequences(String s) {
-        var len = s.length();
-        var res = new HashSet<String>();
-        var set = new HashSet<String>();
-        for (var i = 0; i + 9 < len; i++) {
-            var sub = s.substring(i, i + 10);
-            if (!set.add(sub)) {
-                res.add(sub);
-            }
-        }
-        return new ArrayList<>(res);
-    }
-
     public static int maxArea(int[] height) { //Container with most water
         var start = 0;
         var max = 0;
@@ -2621,18 +1713,6 @@ public class Solution {
         return res;
     }
 
-    public TreeNode invertTree(TreeNode root) {
-        if (root == null) {
-            return null;
-        }
-        var temp = root.left;
-        root.left = root.right;
-        root.right = temp;
-        invertTree(root.left);
-        invertTree(root.right);
-        return root;
-    }
-
     public static int evalRPN(String[] tokens) {
         var stack = new Stack<Integer>();
         for (var str : tokens) {
@@ -2669,18 +1749,6 @@ public class Solution {
             }
         }
         return stack.peek();
-    }
-
-    //[3,4,5,1,2]
-    public int findMin(int[] nums) {
-        int l = 0;
-        int r = nums.length - 1;
-        while (l < r) {
-            int m = (l + r) / 2;
-            if (nums[m] < nums[r]) r = m;
-            else l = m + 1;
-        }
-        return nums[l];
     }
 
     //1,2,3,4,5
@@ -2819,37 +1887,6 @@ public class Solution {
         return res;
     }
 
-    public List<List<Integer>> threeSum(int[] nums) {
-        List<List<Integer>> res = new ArrayList<>();
-        var len = nums.length;
-        Arrays.sort(nums);
-        for (var i = 0; i < len; i++) {
-            while (i > 0 && i < len - 2 && nums[i] == nums[i - 1]) {
-                i++;
-            }
-            var start = i + 1;
-            var end = len - 1;
-            while (start < end) {
-                if (nums[start] + nums[end] + nums[i] > 0) {
-                    end--;
-                } else if (nums[start] + nums[end] + nums[i] < 0) {
-                    start++;
-                } else {
-                    res.add(Arrays.asList(nums[start], nums[i], nums[end]));
-                    start++;
-                    end--;
-                }
-                while (start > i + 1 && start < end && nums[start] == nums[start - 1]) {
-                    start++;
-                }
-                while (end < len - 1 && end > start && nums[end] == nums[end + 1]) {
-                    end--;
-                }
-            }
-        }
-        return res;
-    }
-
     public static int removeDuplicates(int[] nums) {
         var len = nums.length;
         if (len <= 2) {
@@ -2865,74 +1902,6 @@ public class Solution {
             }
         }
         return start;
-    }
-
-    public int findPeakElement(int[] nums) {
-
-        var len = nums.length;
-        if (len == 1) {
-            return 0;
-        }
-
-        if (nums[0] > nums[1]) {
-            return 0;
-        }
-
-        if (nums[len - 1] > nums[len - 2]) {
-            return len - 1;
-        }
-
-        var start = 0;
-        var end = len - 2;
-
-        while (start < end) {
-            var mid = start + (end - start) / 2;
-            if (nums[mid] > nums[mid - 1] && nums[mid] > nums[mid + 1]) {
-                return mid;
-            } else if (nums[mid] > nums[mid - 1]) {
-                start = mid + 1;
-            } else {
-                end = mid - 1;
-            }
-        }
-        return -1;
-    }
-
-    public int findMin1(int[] nums) {
-        var start = 0;
-        var end = nums.length - 1;
-        var min = Integer.MAX_VALUE;
-        while (start <= end) {
-            var mid = (start + end) / 2;
-            if (nums[start] <= nums[mid]) {
-                start = mid + 1;
-                min = Math.min(min, nums[start]);
-            } else {
-                min = Math.min(min, nums[mid]);
-                end = mid - 1;
-            }
-        }
-        return min;
-    }
-
-    public boolean isValidBST(TreeNode root) {
-
-        if (root == null) {
-            return true;
-        }
-
-        if ((root.left == null && root.right == null)) {
-            return true;
-        }
-
-        if (root.left == null && root.right != null && root.val < root.right.val) {
-            return true;
-        }
-
-        if (root.right == null && root.left != null && root.val > root.left.val) {
-            return true;
-        }
-        return (root.right.val > root.val && root.left.val < root.val) && isValidBST(root.left) && isValidBST(root.right);
     }
 
     public static int maxSumContiguosSubArray(int[] array) {
@@ -2979,28 +1948,6 @@ public class Solution {
             }
         }
         return res;
-    }
-
-    public int distinctPrimeFactors(int[] nums) {
-        long product = 1;
-        for (var num : nums) {
-            product = product * num;
-        }
-        Set<Integer> hs = new HashSet<>();
-        while (product % 2 == 0) {
-            hs.add(2);
-            product = product / 2;
-        }
-        for (var i = 3; i < Math.sqrt(product); i = i + 2) {
-            while (product % i == 0) {
-                hs.add(i);
-                product = product / i;
-            }
-        }
-        if (product > 2) {
-            hs.add((int) product);
-        }
-        return hs.size();
     }
 
     public static List<List<Integer>> fourSum(int[] nums, int target) {
@@ -3065,28 +2012,6 @@ public class Solution {
         return -1;
     }
 
-    public boolean isValidSudoku(char[][] board) {
-
-        for (var inn : board) {
-            var set = new HashSet<Character>();
-            for (var ch : inn) {
-                if (Character.isDigit(ch) && !set.add(ch)) {
-                    return false;
-                }
-            }
-        }
-
-        for (var i = 0; i < 9; i++) {
-            var set = new HashSet<Character>();
-            for (var j = 0; j < 9; j++) {
-                if (Character.isDigit(board[i][j]) && !set.add(board[i][j])) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
     public static int lengthOfCycle1(int[] arr, int startIndex) {
         int slow = startIndex;
         int count = 0;
@@ -3104,21 +2029,6 @@ public class Solution {
             count++;
         }
         return -1;
-    }
-
-    public int furthestDistanceFromOrigin(String moves) {
-        int x = 0;
-        int blank = 0;
-        for (int i = 0; i < moves.length(); i++) {
-            if (moves.charAt(i) == 'L') {
-                x--;
-            } else if (moves.charAt(i) == 'R') {
-                x++;
-            } else {
-                blank++;
-            }
-        }
-        return Math.abs(x) + blank;
     }
 
     public static int finalPositionOfSnake(int n, List<String> commands) {
@@ -3178,6 +2088,19 @@ public class Solution {
         }
         return false;
     }
+
+//    public static ListNode modifiedList(int[] nums, ListNode head) {
+//        Set<Integer> set = new HashSet<>();
+//        for(int num : nums){
+//            set.add(num);
+//        }
+//        while (head != null) {
+//            var num = head.val;
+//
+//            head = head.next;
+//        }
+//        return
+//    }
 
     public static String freqAlphabets(String s) {
         StringBuilder sb = new StringBuilder();
@@ -3292,6 +2215,1344 @@ public class Solution {
         return obstacleGrid[n - 1][m - 1];
     }
 
+    public static int threeSumClosest(int[] nums, int target) {
+        int len = nums.length;
+        int res = Integer.MAX_VALUE;
+        int diff = res;
+        for (int i = 0; i < len - 2; i++) {
+            int start = i + 1;
+            int end = len - 1;
+            while (start < end) {
+                int sum = nums[i] + nums[start] + nums[end];
+                if (sum == target) {
+                    res = target;
+                    diff = 0;
+                    start++;
+                    end--;
+                } else if (sum < target) {
+                    if (Math.abs(target - sum) < diff) {
+                        res = sum;
+                        diff = Math.abs(target - sum);
+                    }
+                    start++;
+                } else {
+                    if (Math.abs(target - sum) < diff) {
+                        res = sum;
+                        diff = Math.abs(target - sum);
+                    }
+                    end--;
+                }
+            }
+        }
+        return res;
+    }
+
+    public static int maxPoints(int[][] points) {
+        TreeSet<Integer> x = new TreeSet<>();
+        TreeSet<Integer> y = new TreeSet<>();
+        for (int i = 0; i < points.length; i++) {
+            int temp1 = points[i][0];
+            int temp2 = points[i][1];
+            if (temp1 < 0) {
+                y.add(temp1);
+            } else {
+                x.add(temp1);
+            }
+            if (temp2 < 0) {
+                x.add(temp2);
+            } else {
+                y.add(temp2);
+            }
+        }
+        int temp = 1;
+        int xMax = 1;
+        var list = new ArrayList<>(x);
+        for (int i = 1; i < list.size(); i++) {
+            if (Math.abs(list.get(i) - list.get(i - 1)) == 1) {
+                xMax++;
+            } else {
+                temp = xMax;
+                xMax = 1;
+            }
+        }
+        xMax = Math.max(temp, xMax);
+        temp = 1;
+        int yMax = 1;
+        list = new ArrayList<>(y);
+        for (int i = 1; i < list.size(); i++) {
+            if (Math.abs(list.get(i) - list.get(i - 1)) == 1) {
+                yMax++;
+            } else {
+                temp = yMax;
+                yMax = 1;
+            }
+        }
+        yMax = Math.max(temp, yMax);
+        return Math.max(xMax, yMax);
+    }
+
+    public static void posAndNeg(int[] arr) {
+        // Write your code here
+        Queue<Integer> pos = new LinkedList<>();
+        Queue<Integer> neg = new LinkedList<>();
+
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] >= 0) {
+                pos.add(arr[i]);
+            } else {
+                neg.add(arr[i]);
+            }
+        }
+        boolean isPos = true;
+        int count = 0;
+        while (!pos.isEmpty() || !neg.isEmpty()) {
+            if (isPos) {
+                arr[count++] = pos.poll();
+                isPos = false;
+            } else {
+                arr[count++] = neg.poll();
+                isPos = true;
+            }
+        }
+    }
+
+    public static boolean hasCycle(ListNode head) {
+        if (head == null) {
+            return false;
+        }
+        ListNode slow = head, fast = head;
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (fast == slow) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static int minimumTotal(List<List<Integer>> triangle) {
+        int size = triangle.size();
+        for (int i = size - 2; i >= 0; i--) {
+            var currSize = triangle.get(i).size();
+            for (int j = 0; j < currSize; j++) {
+                triangle.get(i).set(j, triangle.get(i).get(j) +
+                        (Math.min(triangle.get(i + 1).get(j),
+                                triangle.get(i + 1).get(j + 1))));
+            }
+        }
+        return triangle.getFirst().getFirst();
+    }
+
+    public static int[] getFinalState(int[] nums, int k, int multiplier) {
+        while (k > 0) {
+            int minIndex = 0;
+            int min = nums[0];
+            for (int i = 1; i < nums.length; i++) {
+                if (min < nums[i]) {
+                    min = nums[i];
+                    minIndex = i;
+                }
+            }
+            nums[minIndex] *= multiplier;
+            k--;
+        }
+        return nums;
+    }
+
+    public static int maxVowels(String s, int k) {
+        var set = Set.of('a', 'e', 'i', 'o', 'u');
+        int vCount = 0;
+        for (int i = 0; i < k; i++) {
+            if (set.contains(s.charAt(i))) {
+                vCount++;
+            }
+        }
+        int max = vCount;
+        int count = 0;
+        for (int i = k; i < s.length(); i++) {
+            if (set.contains(s.charAt(i))) {
+                vCount++;
+            }
+            if (set.contains(s.charAt(count))) {
+                vCount--;
+            }
+            count++;
+            max = Math.max(max, vCount);
+        }
+        return max;
+    }
+
+    public static String longestNiceSubstring(String s) {
+        if (s.length() <= 1) {
+            return "";
+        }
+        Stack<Character> stack = new Stack<>();
+        StringBuilder sb = new StringBuilder();
+        String res = "";
+        int len = 0;
+        for (char ch : s.toCharArray()) {
+            if (!stack.isEmpty() && (Character.toLowerCase(ch) == stack.peek() || Character.toUpperCase(ch) == stack.peek())) {
+                if (sb.isEmpty()) {
+                    sb.append(stack.peek()).append(ch);
+                } else {
+                    sb.append(ch);
+                }
+            } else {
+                stack.clear();
+                if (sb.length() > len) {
+                    res = sb.toString();
+                    len = res.length();
+                }
+                sb = new StringBuilder();
+                stack.push(ch);
+            }
+        }
+        return !sb.isEmpty() && sb.length() > len ? sb.toString() : res;
+    }
+
+    private static String getCoordinate(char c1, int n1) {
+        String str1 = "";
+        if (c1 == 'a' || c1 == 'c' || c1 == 'e' || c1 == 'g') {
+            if (n1 % 2 != 0) {
+                str1 = "b";
+            } else {
+                str1 = "w";
+            }
+        } else if (c1 == 'b' || c1 == 'd' || c1 == 'f' || c1 == 'h') {
+            if (n1 % 2 == 0) {
+                str1 = "b";
+            } else {
+                str1 = "w";
+            }
+        }
+        return str1;
+    }
+
+    public static List<Integer> findSubstring(String s, String[] words) {
+        List<Integer> list = new ArrayList<>();
+        if (words.length == 0) {
+            return list;
+        }
+        int varLength = words[0].length();
+        HashMap<String, Integer> hm = new HashMap<>();
+        for (String word : words) {
+            hm.put(word, hm.getOrDefault(word, 0) + 1);
+        }
+        HashMap<String, Integer> hmapCopy = new HashMap<>(hm);
+        int count = 0;
+        for (int i = 0; i < s.length() - varLength - 1; i = i + varLength) {
+            String sub = s.substring(i, i + varLength);
+            if (hm.containsKey(sub) && hm.get(sub) > 0) {
+                count++;
+                hm.put(sub, hm.get(sub) - 1);
+                if (count == words.length) {
+                    int actual = varLength * words.length;
+                    list.add(i - (actual - varLength));
+                    count = 0;
+                    hm = new HashMap<>(hmapCopy);
+                }
+            } else {
+                i = i - varLength;
+                count = 0;
+                hm = new HashMap<>(hmapCopy);
+            }
+        }
+        return list;
+    }
+
+    public boolean isArraySpecial(int[] nums) {
+        if (nums.length < 2) {
+            return true;
+        }
+
+        for (var i = 1; i < nums.length; i++) {
+            if ((nums[i] % 2 == 0 && nums[i - 1] % 2 == 0) || (nums[i] % 2 != 0 && nums[i - 1] % 2 != 0)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public int duplicateNumbersXOR(int[] nums) {
+        var map = new HashMap<Integer, Integer>();
+        for (var num : nums) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+        var res = 0;
+        for (var entry : map.entrySet()) {
+            if (entry.getValue() == 2) {
+                res = res ^ entry.getKey();
+            }
+        }
+        return res;
+    }
+
+    public String findLatestTime(String s) {
+        var arr = s.split(":");
+        if (arr[0].equals("??") && arr[1].equals("??")) {
+            return "11:59";
+        }
+        var str1 = arr[0];
+        var res = new StringBuilder();
+        if (str1.equals("??")) {
+            res.append("11");
+        } else {
+            if (Character.isDigit(str1.charAt(0))) {
+                res.append(str1.charAt(0));
+                if (Character.isDigit(str1.charAt(1))) {
+                    res.append(str1.charAt(1));
+                } else {
+                    if (Character.getNumericValue(str1.charAt(0)) == 1) {
+                        res.append(1);
+                    } else {
+                        res.append(9);
+                    }
+                }
+            } else {
+                if (Character.isDigit(str1.charAt(1))) {
+                    if (Character.getNumericValue(str1.charAt(1)) == 1 || Character.getNumericValue(str1.charAt(1)) == 0) {
+                        res.append(1).append(str1.charAt(1));
+                    } else {
+                        res.append(0).append(str1.charAt(1));
+                    }
+                } else {
+                    res.append("11");
+                }
+            }
+        }
+
+        res.append(":");
+        var str2 = arr[1];
+
+        if (str2.equals("??")) {
+            res.append("59");
+        } else {
+            if (Character.isDigit(str2.charAt(0))) {
+                res.append(str2.charAt(0));
+                if (Character.isDigit(str2.charAt(1))) {
+                    res.append(str2.charAt(1));
+                } else {
+                    res.append(9);
+                }
+            } else {
+                if (Character.isDigit(str2.charAt(1))) {
+                    res.append(5).append(str2.charAt(1));
+                } else {
+                    res.append(59);
+                }
+            }
+        }
+        return res.toString();
+    }
+
+    public String maximumTime(String time) {
+        var arr = time.split(":");
+        if (arr[0].equals("??") && arr[1].equals("??")) {
+            return "23:59";
+        }
+        var str1 = arr[0];
+        var res = new StringBuilder();
+        if (str1.equals("??")) {
+            res.append("23");
+        } else {
+            if (Character.isDigit(str1.charAt(0))) {
+                res.append(str1.charAt(0));
+                if (Character.isDigit(str1.charAt(1))) {
+                    res.append(str1.charAt(1));
+                } else {
+                    if (Character.getNumericValue(str1.charAt(0)) == 2) {
+                        res.append(3);
+                    } else {
+                        res.append(9);
+                    }
+                }
+            } else {
+                if (Character.isDigit(str1.charAt(1))) {
+                    if (Character.getNumericValue(str1.charAt(1)) > 3) {
+                        res.append(1).append(str1.charAt(1));
+                    } else {
+                        res.append(2).append(str1.charAt(1));
+                    }
+                } else {
+                    res.append(23);
+                }
+            }
+        }
+        res.append(":");
+        var str2 = arr[1];
+        if (str2.equals("??")) {
+            res.append("59");
+        } else {
+            if (Character.isDigit(str2.charAt(0))) {
+                res.append(str2.charAt(0));
+                if (Character.isDigit(str2.charAt(1))) {
+                    res.append(str2.charAt(1));
+                } else {
+                    res.append(9);
+                }
+            } else {
+                if (Character.isDigit(str2.charAt(1))) {
+                    res.append(5).append(str2.charAt(1));
+                } else {
+                    res.append(59);
+                }
+            }
+        }
+        return res.toString();
+    }
+
+    public int longestValidParentheses(String s) {
+        var stack = new Stack<Character>();
+        var arr = s.toCharArray();
+        var res = 0;
+        for (var ch : arr) {
+            if (ch == '(') {
+                stack.push(ch);
+            } else if (!stack.isEmpty() && ch == ')' && stack.peek() == '(') {
+                stack.pop();
+                res = res + 2;
+            }
+        }
+        return res;
+    }
+
+    public String largestNumber(int[] nums) {
+        var str = Arrays.stream(nums).boxed().map(String::valueOf).sorted((var1, var2) -> (var2 + var1).compareTo(var1 + var2)).collect(Collectors.joining());
+
+        if (new BigInteger(str).equals(BigInteger.ZERO)) {
+            return "0";
+        }
+
+        return str;
+
+    }
+
+    public long smallestNumber(long num) {
+        if (num == 0) {
+            return 0;
+        }
+
+        Comparator<String> comparator = (str1, str2) -> {
+            if (num < 0) {
+                return (str2 + str1).compareTo(str1 + str2);
+            }
+            return (str1 + str2).compareTo(str2 + str1);
+        };
+        if (num < 0) {
+            return -smallestNumber(Math.abs(num), Solution::compare1, true);
+        }
+        return smallestNumber(num, Solution::compare, false);
+    }
+
+    public long smallestNumber(long num, Comparator<String> cmp, boolean isNegative) {
+
+
+        var str = String.valueOf(num).chars().mapToObj(var -> (char) var).map(String::valueOf).sorted(cmp).collect(Collectors.joining());
+
+        if (str.charAt(0) == '0') {
+            var arr = str.toCharArray();
+            var index = 0;
+            if (isNegative) {
+                index = getMax(arr);
+            } else {
+                index = getMin(str);
+            }
+            arr[0] = arr[index];
+            arr[index] = '0';
+            str = new String(arr);
+        }
+        return Long.parseLong(str);
+    }
+
+    private int getMin(String arr) {
+        var val = arr.chars().mapToObj(var -> (char) var).map(Character::getNumericValue).filter(var -> var > 0).min(Comparator.comparingInt(Integer::intValue)).get();
+        return arr.indexOf(Integer.toString(val));
+    }
+
+    private int getMax(char[] arr) {
+        var index = 0;
+        var max = Character.getNumericValue(arr[0]);
+        for (var i = 1; i < arr.length; i++) {
+            if (Character.getNumericValue(arr[i]) > max) {
+                index = i;
+                max = Character.getNumericValue(arr[i]);
+            }
+        }
+        return index;
+    }
+
+    public String clearDigits(String s) {
+        var stack = new Stack<Character>();
+        var arr = s.toCharArray();
+        for (var ch : arr) {
+            if (Character.isDigit(ch)) {
+                stack.pop();
+            } else {
+                stack.push(ch);
+            }
+        }
+        return stack.isEmpty() ? "" : stack.stream().map(String::valueOf).collect(Collectors.joining());
+    }
+
+    public int countCompleteDayPairs(int[] hours) {
+        var result = 0;
+        for (var i = 0; i < hours.length; i++) {
+            for (var j = i + 1; j < hours.length; j++) {
+                if ((hours[i] + hours[j]) % 24 == 0) {
+                    result++;
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+
+    public double minimumAverage(int[] nums) {
+        Arrays.sort(nums);
+        Deque<Integer> que = new LinkedList<>();
+
+        for (var num : nums) {
+            que.addLast(num);
+        }
+        var len = nums.length / 2;
+        var avg = Double.MAX_VALUE;
+        while (len-- > 0) {
+            avg = Math.min(avg, ((double) que.pollFirst() + (double) que.pollLast()) / 2.0);
+        }
+        return avg;
+    }
+
+    public String countAndSay(int n) {
+        var str = "1";
+        if (n == 1) {
+            return str;
+        }
+        var temp = 2;
+        while (temp <= n) {
+            var len = str.length();
+            var prev = str.charAt(0);
+            var sb = new StringBuilder();
+            var count = 1;
+            for (var i = 1; i < len; i++) {
+                var curr = str.charAt(i);
+                if (prev == curr) {
+                    count++;
+                } else {
+                    sb.append(count).append(prev);
+                    count = 1;
+                    prev = curr;
+                }
+            }
+            str = sb.append(count).append(prev).toString();
+            temp++;
+        }
+        return str;
+    }
+
+    public int[][] modifiedMatrix(int[][] matrix) {
+        var len = matrix.length;
+        for (var i = 0; i < len; i++) {
+            var temp = matrix[i];
+            for (var j = 0; j < temp.length; j++) {
+                if (temp[j] == -1) {
+                    var curr = 0;
+                    var max = Integer.MIN_VALUE;
+                    while (curr < len) {
+                        max = Math.max(max, matrix[curr][j]);
+                        curr++;
+                    }
+                    matrix[i][j] = max;
+                }
+            }
+        }
+        return matrix;
+    }
+
+    public String clearStars(String s) {
+        var cnt = s.chars().mapToObj(c -> (char) c).filter(var -> var == '*').count();
+        if (cnt >= s.length() - cnt) {
+            return "";
+        }
+        var arr = s.toCharArray();
+        List<String> list = new ArrayList<>();
+        for (var ch : arr) {
+            if (ch == '*') {
+                var min = Collections.min(list);
+                var index = list.lastIndexOf(min);
+                list.remove(index);
+            } else {
+                list.add(Character.toString(ch));
+            }
+        }
+        return String.join("", list);
+    }
+
+    public int numberOfAlternatingGroups(int[] colors) {
+        var len = colors.length;
+        var res = 0;
+        if (len < 3) {
+            return res;
+        }
+        var temp1 = colors[len - 2];
+        var temp2 = colors[len - 1];
+        if (temp1 != temp2 && temp2 != colors[0]) {
+            res++;
+        }
+        if (temp2 != colors[0] && colors[0] != colors[1]) {
+            res++;
+        }
+        var start = 0;
+        var mid = 1;
+        var end = 2;
+        while (end < len) {
+            if (colors[start] != colors[mid] && colors[mid] != colors[end]) {
+                res++;
+            }
+            start++;
+            mid++;
+            end++;
+        }
+        return res;
+    }
+
+    public int equalPairs(int[][] grid) {
+        var len = grid.length;
+        var rowMap = new HashMap<Integer, int[]>();
+        var columnMap = new HashMap<Integer, int[]>();
+        for (var i = 0; i < len; i++) {
+            rowMap.put(i, grid[i]);
+        }
+        for (var i = 0; i < len; i++) {
+            var col = new int[len];
+            for (var j = 0; j < len; j++) {
+                col[j] = grid[j][i];
+            }
+            columnMap.put(i, col);
+        }
+        var res = 0;
+        for (var i = 0; i < len; i++) {
+            for (var j = 0; j < len; j++) {
+                if (Arrays.equals(rowMap.get(i), columnMap.get(j))) {
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
+
+    public boolean satisfiesConditions(int[][] grid) {
+        var len = grid.length;
+        var col = grid[0].length;
+        if (col == 1 && len == 1) {
+            return true;
+        }
+        if (col == 1) {
+            for (int i = 1; i < len; i++) {
+                if (grid[i][0] != grid[i - 1][0]) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        for (var i = 0; i < len; i++) {
+            for (var j = 0; j < col; j++) {
+                if (j + 1 < col && grid[i][j] != grid[i][j + 1]) {
+                    return false;
+                }
+                if (i + 1 < len && grid[i][j] == grid[i + 1][j]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public int findPermutationDifference(String s, String t) {
+        var res = 0;
+        for (var i = 0; i < s.length(); i++) {
+            var ch = s.charAt(i);
+            var index = t.indexOf(ch);
+            res = res + Math.abs(i - index);
+        }
+        return res;
+    }
+
+    public List<List<Integer>> shiftGrid(int[][] grid, int k) {
+        var list = new ArrayList<>(Arrays.stream(grid).flatMapToInt(Arrays::stream).boxed().toList());
+        Collections.rotate(list, k);
+        List<List<Integer>> res = new ArrayList<>();
+        var len = grid.length;
+        var start = 0;
+        var len1 = grid[0].length;
+        var index = 0;
+        while (start < len) {
+            var temp = index + len1;
+            res.add(list.subList(index, temp));
+            index = temp;
+            start++;
+        }
+        return res;
+    }
+
+    public long[] unmarkedSumArray(int[] nums, int[][] queries) {
+        var len = queries.length;
+        var res = new long[len];
+        var list = new ArrayList<Integer>();
+        for (var num : nums) {
+            list.add(num);
+        }
+        for (var i = 0; i < len; i++) {
+            var temp = queries[i];
+            list.set(temp[0], null);
+            var tempList = list.stream().filter(Objects::nonNull).sorted(Comparator.naturalOrder()).limit(temp[1]).toList();
+            if (tempList.size() < temp[1]) {
+                res[i] = 0;
+                break;
+            } else {
+                var prev = 0;
+                for (var num : tempList) {
+                    var index = list.subList(prev, list.size()).indexOf(num);
+                    list.set(prev + index, null);
+                }
+            }
+            res[i] = list.parallelStream().filter(Objects::nonNull).mapToInt(Integer::intValue).sum();
+        }
+        return res;
+    }
+
+    public int returnToBoundaryCount(int[] nums) {
+        var res = 0;
+        var temp = 0;
+        for (var num : nums) {
+            temp = temp + num;
+            if (temp == 0) {
+                res++;
+            }
+        }
+        return res;
+    }
+
+    public int minimumRightShifts(List<Integer> nums) {
+        var list = new ArrayList<>(nums);
+        Collections.sort(list);
+        var len = list.size();
+
+        if (list.equals(nums)) {
+            return 0;
+        }
+
+        while (len > 0) {
+            Collections.rotate(nums, -1);
+            if (list.equals(nums)) {
+                return list.size() - len;
+            }
+            len--;
+        }
+        return -1;
+    }
+
+    public int minLength(String s) {
+        var sb = new StringBuilder(s);
+        while (s.contains("AB") || s.contains("CD")) {
+            var index = s.indexOf("AB");
+            if (index != -1) {
+                sb.replace(index, index + 2, "");
+            } else {
+                index = s.indexOf("CD");
+                sb.replace(index, index + 2, "");
+            }
+            s = sb.toString();
+        }
+        return s.length();
+    }
+
+    public String makeSmallestPalindrome(String s) {
+        var arr = s.toCharArray();
+        var start = 0;
+        var end = arr.length - 1;
+        while (start < end) {
+            if (arr[start] != arr[end]) {
+                if (arr[start] > arr[end]) {
+                    arr[start] = arr[end];
+                } else {
+                    arr[end] = arr[start];
+                }
+            }
+            start++;
+            end--;
+        }
+        return new String(arr);
+    }
+
+    public void wiggleSort(int[] nums) {
+        var list = new ArrayList<Integer>();
+        for (var num : nums) {
+            list.add(num);
+        }
+        Collections.sort(list);
+        var start = 0;
+        while (!list.isEmpty()) {
+            nums[start] = list.removeFirst();
+            if (!list.isEmpty()) {
+                start = start + 1;
+                nums[start] = list.removeLast();
+            }
+            start++;
+        }
+    }
+
+    public int[][] spiralMatrix(int m, int n, ListNode head) {
+        var matrix = new int[m][n];
+        var rightIndex = n;
+        var rightStart = 0;
+        var downStart = 1;
+        var initial = 0;
+        var last = m - 1;
+        while (initial <= last) {
+            var temp = rightStart;
+            while (temp < rightIndex) {
+                matrix[initial][temp] = Objects.nonNull(head) ? head.val : -1;
+                if (Objects.nonNull(head)) {
+                    head = head.next;
+                }
+                temp++;
+            }
+            rightStart++;
+            rightIndex--;
+            if (downStart > last) {
+                break;
+            }
+            var stat = temp - 1;
+            temp = downStart;
+            while (temp <= last) {
+                matrix[temp][stat] = Objects.nonNull(head) ? head.val : -1;
+                if (Objects.nonNull(head)) {
+                    head = head.next;
+                }
+                temp++;
+            }
+            var leftStart = rightIndex - 1;
+            if (leftStart < rightStart - 1) {
+                break;
+            }
+            while (leftStart >= rightStart - 1) {
+                matrix[last][leftStart] = Objects.nonNull(head) ? head.val : -1;
+                if (Objects.nonNull(head)) {
+                    head = head.next;
+                }
+                leftStart--;
+            }
+            var upStart = last - 1;
+            if (upStart < initial) {
+                break;
+            }
+            while (upStart > initial) {
+                matrix[upStart][rightStart - 1] = Objects.nonNull(head) ? head.val : -1;
+                if (Objects.nonNull(head)) {
+                    head = head.next;
+                }
+                upStart--;
+            }
+            if (rightStart == rightIndex) {
+                break;
+            }
+            initial++;
+            downStart++;
+            last--;
+        }
+        return matrix;
+    }
+
+    public int hammingDistance(int x, int y) {
+        var first = x;
+        var second = y;
+        if (x < y) {
+            first = y;
+            second = x;
+        }
+        var str1 = Integer.toBinaryString(first);
+        var str2 = Integer.toBinaryString(second);
+        var len = str1.length();
+        str2 = "0".repeat(len - str2.length()) + str2;
+        var res = 0;
+        for (var i = 0; i < len; i++) {
+            if (str1.charAt(i) != str2.charAt(i)) {
+                res++;
+            }
+        }
+        return res;
+    }
+
+    public int totalHammingDistance(int[] nums) {
+        var max = IntStream.of(nums).max().getAsInt();
+        var temp = Integer.toBinaryString(max);
+        var arr = new String[nums.length];
+        for (var i = 0; i < nums.length; i++) {
+            var st = Integer.toBinaryString(nums[i]);
+            arr[i] = "0".repeat(temp.length() - st.length()) + st;
+        }
+        var res = 0;
+        for (var i = 0; i < nums.length; i++) {
+            var str1 = arr[i];
+            for (var j = i + 1; j < nums.length; j++) {
+                var str2 = arr[j];
+                for (var k = 0; k < temp.length(); k++) {
+                    if (str1.charAt(k) != str2.charAt(k)) {
+                        res++;
+                    }
+                }
+            }
+        }
+        return res;
+    }
+
+    public boolean isSubtree(TreeNode root, TreeNode subRoot) {
+        if (root == null && subRoot == null) {
+            return true;
+        }
+        if (root == null || subRoot == null) {
+            return false;
+        }
+        var rootVal = subRoot.val;
+        Queue<TreeNode> que = new LinkedList<>();
+        que.offer(root);
+        while (!que.isEmpty()) {
+            var size = que.size();
+            while (size > 0) {
+                var node = que.poll();
+                if (node.val == rootVal && areIdentical(node, subRoot)) {
+                    return true;
+                }
+                if (Objects.nonNull(node.right)) {
+                    que.offer(node.right);
+                }
+                if (Objects.nonNull(node.left)) {
+                    que.offer(node.left);
+                }
+                size--;
+            }
+        }
+        return false;
+    }
+
+    private boolean areIdentical(TreeNode node, TreeNode subRoot) {
+        if (node == null && subRoot == null) {
+            return true;
+        }
+        if (node == null || subRoot == null) {
+            return false;
+        }
+        return node.val == subRoot.val && areIdentical(node.left, subRoot.left) && areIdentical(node.right, subRoot.right);
+    }
+
+    public String getSmallestString(String s) {
+        var arr = s.toCharArray();
+        var prev = Character.getNumericValue(arr[0]);
+        for (var i = 1; i < arr.length; i++) {
+            var curr = Character.getNumericValue(arr[i]);
+            if (prev % 2 == curr % 2 && prev > curr) {
+                var temp = arr[i];
+                arr[i] = arr[i - 1];
+                arr[i - 1] = temp;
+                break;
+            }
+            prev = curr;
+        }
+        return new String(arr);
+    }
+
+    public int getMinimumDifference(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        Queue<TreeNode> que = new LinkedList<>();
+        var set = new HashSet<Integer>();
+        que.offer(root);
+        var res = Integer.MAX_VALUE;
+        while (!que.isEmpty()) {
+            var size = que.size();
+            while (size > 0) {
+                var node = que.poll();
+                var val = node.val;
+                if (!set.isEmpty()) {
+                    if (!set.contains(val)) {
+                        res = getMin(set, val, res);
+                        set.add(val);
+                    }
+                } else {
+                    set.add(val);
+                }
+                if (node.left != null) {
+                    if (!set.contains(val)) {
+                        res = getMin(set, node.left.val, res);
+                        set.add(node.left.val);
+                    }
+                    que.offer(node.left);
+                }
+                if (node.right != null) {
+                    if (!set.contains(val)) {
+                        res = getMin(set, node.right.val, res);
+                        set.add(node.right.val);
+                    }
+                    que.offer(node.right);
+                }
+                size--;
+            }
+        }
+        return res;
+    }
+
+    public int getMin(Set<Integer> set, int val, int res) {
+        if (!set.contains(val)) {
+            res = Math.min(res, set.stream().map(var -> Math.abs(var - val)).min(Comparator.comparing(Integer::intValue)).get());
+            set.add(val);
+        }
+        return res;
+    }
+
+    public boolean findTarget(TreeNode root, int k) {
+        var set = new HashSet<Integer>();
+        if (root == null) {
+            return false;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            if (set.contains(k - node.val)) {
+                return true;
+            }
+            set.add(node.val);
+            if (node.left != null) {
+                queue.add(node.left);
+            }
+            if (node.right != null) {
+                queue.add(node.right);
+            }
+        }
+        return false;
+    }
+
+    public int[][] sortTheStudents(int[][] score, int k) {
+        var map = new TreeMap<Integer, int[]>(Comparator.reverseOrder());
+        for (var arr : score) {
+            map.put(arr[k], arr);
+        }
+        return map.values().toArray(int[][]::new);
+    }
+
+    public int countPoints(String rings) {
+        var map = new HashMap<Character, HashSet<Character>>();
+        for (var i = 1; i < rings.length(); i += 2) {
+            var ch = rings.charAt(i);
+            HashSet<Character> set;
+            if (map.containsKey(ch)) {
+                set = map.get(ch);
+            } else {
+                set = new HashSet<>();
+            }
+            set.add(rings.charAt(i - 1));
+            map.put(ch, set);
+        }
+        return (int) map.values().stream().filter(var -> var.size() == 3).count();
+    }
+
+    public int maxDepth(Node root) {
+        if (root == null) {
+            return 0;
+        }
+        var res = 0;
+        Queue<Node> que = new LinkedList<>(root.children);
+        res = res + 1;
+        while (!que.isEmpty()) {
+            var size = que.size();
+            while (size > 0) {
+                var node = que.poll();
+                que.addAll(node.children);
+                size--;
+            }
+            res++;
+        }
+        return res;
+    }
+
+    public boolean isToeplitzMatrix(int[][] matrix) {
+        var rows = matrix.length;
+        var col = matrix[0].length;
+        if (col == 1 || rows == 1) {
+            return true;
+        }
+        for (var i = 0; i < rows; i++) {
+            var arr = matrix[i];
+            for (var j = 0; j < col; j++) {
+                var num = arr[j];
+                var index = j + 1;
+                var start = i + 1;
+                while (index < col && start < rows) {
+                    if (matrix[start][index] != num) {
+                        return false;
+                    }
+                    index++;
+                    start++;
+                }
+            }
+        }
+        return true;
+    }
+
+    public int minDiffInBST(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        Queue<TreeNode> que = new LinkedList<>();
+        que.add(root);
+        var list = new ArrayList<Integer>();
+        while (!que.isEmpty()) {
+            var node = que.poll();
+            list.add(node.val);
+            if (node.left != null) {
+                que.add(node.left);
+            }
+            if (node.right != null) {
+                que.add(node.right);
+            }
+        }
+        if (list.size() < 2) {
+            return list.getFirst();
+        }
+        Collections.sort(list);
+        return Math.min(list.get(1) - list.getFirst(), list.getLast() - list.get(list.size() - 2));
+    }
+
+    public int minChanges(int n, int k) {
+        if (k > n) {
+            return -1;
+        }
+        var str1 = Integer.toBinaryString(n);
+        var str2 = Integer.toBinaryString(k);
+        var len = str1.length();
+        if (len > str2.length()) {
+            str2 = "0".repeat(len - str2.length()) + str2;
+        }
+        var res = 0;
+        for (var i = 0; i < len; i++) {
+            if (str1.charAt(i) == '1' && str2.charAt(i) == '0') {
+                res++;
+            } else if (str1.charAt(i) == '0' && str2.charAt(i) == '1') {
+                res = -1;
+                break;
+            }
+        }
+        return res;
+    }
+
+    public List<String> findRepeatedDnaSequences(String s) {
+        var len = s.length();
+        var res = new HashSet<String>();
+        var set = new HashSet<String>();
+        for (var i = 0; i + 9 < len; i++) {
+            var sub = s.substring(i, i + 10);
+            if (!set.add(sub)) {
+                res.add(sub);
+            }
+        }
+        return new ArrayList<>(res);
+    }
+
+    public TreeNode invertTree(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+        var temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+        invertTree(root.left);
+        invertTree(root.right);
+        return root;
+    }
+
+    //[3,4,5,1,2]
+    public int findMin(int[] nums) {
+        int l = 0;
+        int r = nums.length - 1;
+        while (l < r) {
+            int m = (l + r) / 2;
+            if (nums[m] < nums[r]) r = m;
+            else l = m + 1;
+        }
+        return nums[l];
+    }
+
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> res = new ArrayList<>();
+        var len = nums.length;
+        Arrays.sort(nums);
+        for (var i = 0; i < len; i++) {
+            while (i > 0 && i < len - 2 && nums[i] == nums[i - 1]) {
+                i++;
+            }
+            var start = i + 1;
+            var end = len - 1;
+            while (start < end) {
+                if (nums[start] + nums[end] + nums[i] > 0) {
+                    end--;
+                } else if (nums[start] + nums[end] + nums[i] < 0) {
+                    start++;
+                } else {
+                    res.add(Arrays.asList(nums[start], nums[i], nums[end]));
+                    start++;
+                    end--;
+                }
+                while (start > i + 1 && start < end && nums[start] == nums[start - 1]) {
+                    start++;
+                }
+                while (end < len - 1 && end > start && nums[end] == nums[end + 1]) {
+                    end--;
+                }
+            }
+        }
+        return res;
+    }
+
+    public int findPeakElement(int[] nums) {
+
+        var len = nums.length;
+        if (len == 1) {
+            return 0;
+        }
+
+        if (nums[0] > nums[1]) {
+            return 0;
+        }
+
+        if (nums[len - 1] > nums[len - 2]) {
+            return len - 1;
+        }
+
+        var start = 0;
+        var end = len - 2;
+
+        while (start < end) {
+            var mid = start + (end - start) / 2;
+            if (nums[mid] > nums[mid - 1] && nums[mid] > nums[mid + 1]) {
+                return mid;
+            } else if (nums[mid] > nums[mid - 1]) {
+                start = mid + 1;
+            } else {
+                end = mid - 1;
+            }
+        }
+        return -1;
+    }
+
+    public int findMin1(int[] nums) {
+        var start = 0;
+        var end = nums.length - 1;
+        var min = Integer.MAX_VALUE;
+        while (start <= end) {
+            var mid = (start + end) / 2;
+            if (nums[start] <= nums[mid]) {
+                start = mid + 1;
+                min = Math.min(min, nums[start]);
+            } else {
+                min = Math.min(min, nums[mid]);
+                end = mid - 1;
+            }
+        }
+        return min;
+    }
+
+    public boolean isValidBST(TreeNode root) {
+
+        if (root == null) {
+            return true;
+        }
+
+        if ((root.left == null && root.right == null)) {
+            return true;
+        }
+
+        if (root.left == null && root.right != null && root.val < root.right.val) {
+            return true;
+        }
+
+        if (root.right == null && root.left != null && root.val > root.left.val) {
+            return true;
+        }
+        return (root.right.val > root.val && root.left.val < root.val) && isValidBST(root.left) && isValidBST(root.right);
+    }
+
+    public int distinctPrimeFactors(int[] nums) {
+        long product = 1;
+        for (var num : nums) {
+            product = product * num;
+        }
+        Set<Integer> hs = new HashSet<>();
+        while (product % 2 == 0) {
+            hs.add(2);
+            product = product / 2;
+        }
+        for (var i = 3; i < Math.sqrt(product); i = i + 2) {
+            while (product % i == 0) {
+                hs.add(i);
+                product = product / i;
+            }
+        }
+        if (product > 2) {
+            hs.add((int) product);
+        }
+        return hs.size();
+    }
+
+    public boolean isValidSudoku(char[][] board) {
+        for (var i = 0; i < 9; i++) {
+            var set = new HashSet<Character>();
+            for (var j = 0; j < 9; j++) {
+                if (Character.isDigit(board[j][0]) && !set.add(board[j][0])) {
+                    return false;
+                }
+            }
+        }
+        return isValidSudoku(0, 9, 0, 9, board) &&
+                isValidSudoku(0, 3, 0, 3, board) &&
+                isValidSudoku(0, 3, 3, 6, board) &&
+                isValidSudoku(0, 3, 6, 9, board) &&
+                isValidSudoku(3, 6, 0, 3, board) &&
+                isValidSudoku(3, 6, 3, 6, board) &&
+                isValidSudoku(3, 6, 6, 9, board) &&
+                isValidSudoku(6, 9, 0, 3, board) &&
+                isValidSudoku(6, 9, 3, 6, board) &&
+                isValidSudoku(6, 9, 6, 9, board);
+    }
+
+    public boolean isValidSudoku(int start, int end, int startIndex, int endIndex, char[][] board) {
+        for (var i = start; i < end; i++) {
+            var set = new HashSet<Character>();
+            for (var j = startIndex; j < endIndex; j++) {
+                if (Character.isDigit(board[i][j]) && !set.add(board[i][j])) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public int furthestDistanceFromOrigin(String moves) {
+        int x = 0;
+        int blank = 0;
+        for (int i = 0; i < moves.length(); i++) {
+            if (moves.charAt(i) == 'L') {
+                x--;
+            } else if (moves.charAt(i) == 'R') {
+                x++;
+            } else {
+                blank++;
+            }
+        }
+        return Math.abs(x) + blank;
+    }
+
     public boolean lemonadeChange(int[] bills) {
         int fiveCount = 0;
         int tenCount = 0;
@@ -3339,6 +3600,11 @@ public class Solution {
         }
         return res;
     }
+
+
+//    public int smallestValue(int n) {
+//
+//    }
 
     public ListNode addTwoNumbers1(ListNode l1, ListNode l2) {
         StringBuilder sb = new StringBuilder();
@@ -3425,38 +3691,6 @@ public class Solution {
         return res;
     }
 
-    public static int threeSumClosest(int[] nums, int target) {
-        int len = nums.length;
-        int res = Integer.MAX_VALUE;
-        int diff = res;
-        for (int i = 0; i < len - 2; i++) {
-            int start = i + 1;
-            int end = len - 1;
-            while (start < end) {
-                int sum = nums[i] + nums[start] + nums[end];
-                if (sum == target) {
-                    res = target;
-                    diff = 0;
-                    start++;
-                    end--;
-                } else if (sum < target) {
-                    if (Math.abs(target - sum) < diff) {
-                        res = sum;
-                        diff = Math.abs(target - sum);
-                    }
-                    start++;
-                } else {
-                    if (Math.abs(target - sum) < diff) {
-                        res = sum;
-                        diff = Math.abs(target - sum);
-                    }
-                    end--;
-                }
-            }
-        }
-        return res;
-    }
-
     public boolean check(int[] nums) {
         int count = 0;
         for (int i = 1; i < nums.length; i++) {
@@ -3471,50 +3705,6 @@ public class Solution {
             count++;
         }
         return count <= 1;
-    }
-
-    public static int maxPoints(int[][] points) {
-        TreeSet<Integer> x = new TreeSet<>();
-        TreeSet<Integer> y = new TreeSet<>();
-        for (int i = 0; i < points.length; i++) {
-            int temp1 = points[i][0];
-            int temp2 = points[i][1];
-            if (temp1 < 0) {
-                y.add(temp1);
-            } else {
-                x.add(temp1);
-            }
-            if (temp2 < 0) {
-                x.add(temp2);
-            } else {
-                y.add(temp2);
-            }
-        }
-        int temp = 1;
-        int xMax = 1;
-        var list = new ArrayList<>(x);
-        for (int i = 1; i < list.size(); i++) {
-            if (Math.abs(list.get(i) - list.get(i - 1)) == 1) {
-                xMax++;
-            } else {
-                temp = xMax;
-                xMax = 1;
-            }
-        }
-        xMax = Math.max(temp, xMax);
-        temp = 1;
-        int yMax = 1;
-        list = new ArrayList<>(y);
-        for (int i = 1; i < list.size(); i++) {
-            if (Math.abs(list.get(i) - list.get(i - 1)) == 1) {
-                yMax++;
-            } else {
-                temp = yMax;
-                yMax = 1;
-            }
-        }
-        yMax = Math.max(temp, yMax);
-        return Math.max(xMax, yMax);
     }
 
     public int[] resultsArray(int[] nums, int k) {
@@ -3567,51 +3757,6 @@ public class Solution {
         return steps;
     }
 
-
-//    public int smallestValue(int n) {
-//
-//    }
-
-    public static void posAndNeg(int[] arr) {
-        // Write your code here
-        Queue<Integer> pos = new LinkedList<>();
-        Queue<Integer> neg = new LinkedList<>();
-
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] >= 0) {
-                pos.add(arr[i]);
-            } else {
-                neg.add(arr[i]);
-            }
-        }
-        boolean isPos = true;
-        int count = 0;
-        while (!pos.isEmpty() || !neg.isEmpty()) {
-            if (isPos) {
-                arr[count++] = pos.poll();
-                isPos = false;
-            } else {
-                arr[count++] = neg.poll();
-                isPos = true;
-            }
-        }
-    }
-
-    public static boolean hasCycle(ListNode head) {
-        if (head == null) {
-            return false;
-        }
-        ListNode slow = head, fast = head;
-        while (fast.next != null && fast.next.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-            if (fast == slow) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public ListNode detectCycle(ListNode head) {
         if (head == null) {
             return null;
@@ -3636,35 +3781,6 @@ public class Solution {
             return meetingPoint;
         }
         return null;
-    }
-
-    public static int minimumTotal(List<List<Integer>> triangle) {
-        int size = triangle.size();
-        for (int i = size - 2; i >= 0; i--) {
-            var currSize = triangle.get(i).size();
-            for (int j = 0; j < currSize; j++) {
-                triangle.get(i).set(j, triangle.get(i).get(j) +
-                        (Math.min(triangle.get(i + 1).get(j),
-                                triangle.get(i + 1).get(j + 1))));
-            }
-        }
-        return triangle.getFirst().getFirst();
-    }
-
-    public static int[] getFinalState(int[] nums, int k, int multiplier) {
-        while (k > 0) {
-            int minIndex = 0;
-            int min = nums[0];
-            for (int i = 1; i < nums.length; i++) {
-                if (min < nums[i]) {
-                    min = nums[i];
-                    minIndex = i;
-                }
-            }
-            nums[minIndex] *= multiplier;
-            k--;
-        }
-        return nums;
     }
 
     public boolean containsNearbyDuplicate(int[] nums, int k) {
@@ -3732,57 +3848,6 @@ public class Solution {
             max = Math.max(max, (double) total / k);
         }
         return max;
-    }
-
-    public static int maxVowels(String s, int k) {
-        var set = Set.of('a', 'e', 'i', 'o', 'u');
-        int vCount = 0;
-        for (int i = 0; i < k; i++) {
-            if (set.contains(s.charAt(i))) {
-                vCount++;
-            }
-        }
-        int max = vCount;
-        int count = 0;
-        for (int i = k; i < s.length(); i++) {
-            if (set.contains(s.charAt(i))) {
-                vCount++;
-            }
-            if (set.contains(s.charAt(count))) {
-                vCount--;
-            }
-            count++;
-            max = Math.max(max, vCount);
-        }
-        return max;
-    }
-
-    public static String longestNiceSubstring(String s) {
-        if (s.length() <= 1) {
-            return "";
-        }
-        Stack<Character> stack = new Stack<>();
-        StringBuilder sb = new StringBuilder();
-        String res = "";
-        int len = 0;
-        for (char ch : s.toCharArray()) {
-            if (!stack.isEmpty() && (Character.toLowerCase(ch) == stack.peek() || Character.toUpperCase(ch) == stack.peek())) {
-                if (sb.isEmpty()) {
-                    sb.append(stack.peek()).append(ch);
-                } else {
-                    sb.append(ch);
-                }
-            } else {
-                stack.clear();
-                if (sb.length() > len) {
-                    res = sb.toString();
-                    len = res.length();
-                }
-                sb = new StringBuilder();
-                stack.push(ch);
-            }
-        }
-        return !sb.isEmpty() && sb.length() > len ? sb.toString() : res;
     }
 
     public String decodeAtIndex(String s, int k) {
@@ -3878,22 +3943,61 @@ public class Solution {
         int n1 = coordinate1.charAt(1) - '0', n2 = coordinate2.charAt(1) - '0';
         return getCoordinate(c1, n1).equals(getCoordinate(c2, n2));
     }
-    private static String getCoordinate(char c1, int n1) {
-        String str1 = "";
-        if (c1 == 'a' || c1 == 'c' || c1 == 'e' || c1 == 'g') {
-            if (n1 % 2 != 0) {
-                str1 = "b";
-            } else {
-                str1 = "w";
-            }
-        } else if (c1 == 'b' || c1 == 'd' || c1 == 'f' || c1 == 'h') {
-            if (n1 % 2 == 0) {
-                str1 = "b";
-            } else {
-                str1 = "w";
+
+    public String convertDateToBinary(String date) {
+        Function<String, String> function = (str) -> {
+            int num = Integer.parseInt(str);
+            return Integer.toBinaryString(num);
+        };
+        return Stream.of(date.split("-")).map(function).collect(Collectors.joining("-"));
+    }
+
+    public List<Integer> stableMountains(int[] height, int threshold) {
+        var res = new ArrayList<Integer>();
+        for (var i = 1; i < height.length; i++) {
+            if (height[i - 1] > threshold) {
+                res.add(i);
             }
         }
-        return str1;
+        return res;
+    }
+
+    public int[] getSneakyNumbers(int[] nums) {
+        var map = new HashMap<Integer, Integer>();
+        for (var num : nums) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+        return map.entrySet().stream().filter(var -> var.getValue() == 2).mapToInt(Map.Entry::getKey).toArray();
+    }
+
+    public boolean reportSpam(String[] message, String[] bannedWords) {
+
+        var map1 = new HashMap<String, Integer>();
+        var map2 = new HashMap<String, Integer>();
+
+        for (var str : message) {
+            map1.put(str, map1.getOrDefault(str, 0) + 1);
+        }
+
+        for (var str : bannedWords) {
+            map2.put(str, map2.getOrDefault(str, 0) + 1);
+        }
+
+        int count = 0;
+        for (var entry : map2.entrySet()) {
+            if (map1.containsKey(entry.getKey())) {
+                int val = map1.get(entry.getKey());
+                if (val > entry.getValue()) {
+                    count += val;
+                } else {
+                    count += Math.min(entry.getValue(), val);
+                }
+            }
+            if (count >= 2) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

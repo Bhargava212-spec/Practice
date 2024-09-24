@@ -127,7 +127,7 @@ public class CustomHashMap<K, V> {
     private void resize() {
         CustomEntry<K, V>[] oldTable = table;
         table = new CustomEntry[oldTable.length * 2];
-        size = 0; // Reset size and reinsert all entries
+        size = 0;
         for (CustomEntry<K, V> entry : oldTable) {
             while (entry != null) {
                 put(entry.getKey(), entry.getValue());

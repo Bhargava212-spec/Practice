@@ -140,7 +140,7 @@ public class CustomArrayList<T> implements Collection<T> {
 
     private void rangeCheck(int index) {
         if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException(STR."invalid index or index is out of range\{index}");
+            throw new IndexOutOfBoundsException("invalid index or index is out of range"+ index);
         }
     }
 
