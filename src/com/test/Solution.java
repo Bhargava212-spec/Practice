@@ -38,7 +38,7 @@ public class Solution {
 //        } else {
 //            System.out.println("false");
 //        }
-        findSubstring("barfoofoobarthefoobarman", new String[]{"bar", "foo", "the"});
+        kthCharacter(5);
     }
 
 
@@ -2461,11 +2461,57 @@ public class Solution {
         return list;
     }
 
+    public static char kthCharacter(int k) {
+        String str = "a";
+        while (str.length() < k) {
+            StringBuilder sb = new StringBuilder(str);
+            for (char ch : str.toCharArray()) {
+                int num = ch - 97;
+                if (num == 25) {
+                    sb.append('a');
+                } else {
+                    char ch1 = (char) (num + 1 + 97);
+                    sb.append(ch1);
+                }
+            }
+            str = sb.toString();
+        }
+        return str.charAt(k - 1);
+    }
+
+    public char kthCharacter1(long k, int[] operations) { // hard //758/901
+        StringBuilder sb = new StringBuilder("a");
+        for (int num : operations) {
+            if (sb.length() >= k) {
+                break;
+            }
+            if (num == 0) {
+                sb.append(sb);
+            } else {
+                sb = getKthChar(sb.toString());
+            }
+        }
+        return sb.charAt((int) k - 1);
+    }
+
+    public StringBuilder getKthChar(String str) {
+        StringBuilder sb = new StringBuilder(str);
+        for (char ch : str.toCharArray()) {
+            int num = ch - 97;
+            if (num == 25) {
+                sb.append('a');
+            } else {
+                char ch1 = (char) (num + 1 + 97);
+                sb.append(ch1);
+            }
+        }
+        return sb;
+    }
+
     public boolean isArraySpecial(int[] nums) {
         if (nums.length < 2) {
             return true;
         }
-
         for (var i = 1; i < nums.length; i++) {
             if ((nums[i] % 2 == 0 && nums[i - 1] % 2 == 0) || (nums[i] % 2 != 0 && nums[i - 1] % 2 != 0)) {
                 return false;
@@ -3538,6 +3584,11 @@ public class Solution {
         return true;
     }
 
+
+//    public int smallestValue(int n) {
+//
+//    }
+
     public int furthestDistanceFromOrigin(String moves) {
         int x = 0;
         int blank = 0;
@@ -3600,11 +3651,6 @@ public class Solution {
         }
         return res;
     }
-
-
-//    public int smallestValue(int n) {
-//
-//    }
 
     public ListNode addTwoNumbers1(ListNode l1, ListNode l2) {
         StringBuilder sb = new StringBuilder();
@@ -3998,6 +4044,19 @@ public class Solution {
             }
         }
         return false;
+    }
+
+    public int minElement(int[] nums) {
+        int res = Integer.MAX_VALUE;
+        for (int num : nums) {
+            int sum = 0;
+            while (num > 0) {
+                sum = sum + num % 10;
+                num = num / 10;
+            }
+            res = Math.min(res, sum);
+        }
+        return res;
     }
 
 }
