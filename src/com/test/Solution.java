@@ -38,7 +38,6 @@ public class Solution {
 //        } else {
 //            System.out.println("false");
 //        }
-        kthCharacter(5);
     }
 
 
@@ -2479,6 +2478,28 @@ public class Solution {
         return str.charAt(k - 1);
     }
 
+    public  int possibleStringCount(String word) {
+        if (word.isEmpty()) {
+            return 0;
+        }
+        char c = word.charAt(0);
+        int count = 1;
+        int res = 1;
+        for (int i = 1; i < word.length(); i++) {
+            char ch = word.charAt(i);
+            if (ch == c) {
+                count++;
+            } else {
+                c = ch;
+                if (count > 1) {
+                    res += count - 1;
+                }
+                count = 1;
+            }
+        }
+        return count > 1 ? res + (count - 1) : res;
+    }
+
     public char kthCharacter1(long k, int[] operations) { // hard //758/901
         StringBuilder sb = new StringBuilder("a");
         for (int num : operations) {
@@ -3572,6 +3593,11 @@ public class Solution {
                 isValidSudoku(6, 9, 6, 9, board);
     }
 
+
+//    public int smallestValue(int n) {
+//
+//    }
+
     public boolean isValidSudoku(int start, int end, int startIndex, int endIndex, char[][] board) {
         for (var i = start; i < end; i++) {
             var set = new HashSet<Character>();
@@ -3583,11 +3609,6 @@ public class Solution {
         }
         return true;
     }
-
-
-//    public int smallestValue(int n) {
-//
-//    }
 
     public int furthestDistanceFromOrigin(String moves) {
         int x = 0;
